@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FTech.Domain.Entities.Auth;
+using FTech.Infrastructure.Repositories.Base;
 
 namespace FTech.Infrastructure.Repositories.Users
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
     }
 }
