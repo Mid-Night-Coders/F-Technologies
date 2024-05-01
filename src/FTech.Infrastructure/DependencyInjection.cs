@@ -1,5 +1,7 @@
 ﻿using FTech.Infrastructure.Data;
 using FTech.Infrastructure.Repositories.Users;
+using FTech.Infrastructure.Services.OTP;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,9 @@ namespace FTech.Infrastructure
 
             //Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+
+            //SMS
+            services.AddScoped<ISMSService, SMSService>();
 
             return services;
         }
