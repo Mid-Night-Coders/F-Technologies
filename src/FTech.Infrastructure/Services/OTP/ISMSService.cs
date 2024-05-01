@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FTech.Domain.Models.SMS;
 
-namespace FTech.Infrastructure.Services.OTP
+namespace FTech.Infrastructure.Services.OTP;
+
+public interface ISMSService
 {
-    public interface ISMSService
-    {
-    }
+    ValueTask<SendResultSMS> SendOtpAsync(string phoneNumber);
 }
