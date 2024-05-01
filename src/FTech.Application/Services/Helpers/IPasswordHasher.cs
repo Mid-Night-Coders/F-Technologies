@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FTech.Application.Services.Helpers
+﻿namespace FTech.Application.Services.Helpers
 {
     public interface IPasswordHasher
     {
+        string Encrypt(string password, string salt);
+        bool Verify(string hash, string password, string salt);
     }
 }
