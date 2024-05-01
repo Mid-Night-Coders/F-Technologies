@@ -5,5 +5,6 @@ namespace FTech.Infrastructure.Repositories.Users
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+        ValueTask<User> GetByPhoneNumberAsync(string phoneNumber);
     }
 }
