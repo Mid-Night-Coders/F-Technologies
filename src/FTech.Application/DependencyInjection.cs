@@ -1,13 +1,14 @@
 ﻿using FTech.Application.Services.Auth;
 using FTech.Application.Services.Helpers;
 using FTech.Application.Services.JWT;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FTech.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IJWTService, JWTService>();
