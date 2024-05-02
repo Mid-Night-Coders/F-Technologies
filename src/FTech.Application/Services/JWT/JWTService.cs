@@ -21,7 +21,8 @@ namespace FTech.Application.Services.JWT
             var claims = new List<Claim>()
             {
                 new Claim("Id", user.Id.ToString()),
-                new Claim("PhoneNumber", user.PhoneNumber)
+                new Claim("PhoneNumber", user.PhoneNumber),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var authSigningKey = new SymmetricSecurityKey(

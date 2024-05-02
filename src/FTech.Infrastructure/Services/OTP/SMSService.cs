@@ -14,13 +14,11 @@ public class SMSService : ISMSService
     private readonly string _secretKey;
     private readonly IConfiguration _configuration;
 
-    public SMSService()
+    public SMSService(IConfiguration configuration)
     {
-        _configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-        _email = _configuration["SMS:Email"];
-        _secretKey = _configuration["SMS:SecretKey"];
+        _configuration = configuration;
+        _email = _configuration["SmsSettings:Email"];
+        _secretKey = _configuration["SmsSettings:SecretKey"];
         GetToken();
     }
 
