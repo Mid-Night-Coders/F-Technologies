@@ -13,8 +13,10 @@ namespace FTech.Infrastructure.Repositories.Users
 
         public async ValueTask<User> GetByPhoneNumberAsync(string phoneNumber)
         {
-            return await _appDbContext.Users
+            var user = await _appDbContext.Users
                 .FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+
+            return user;
         }
     }
 }
