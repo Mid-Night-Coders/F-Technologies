@@ -1,9 +1,5 @@
 ﻿using FTech.Infrastructure.Services.OTP;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Twilio.TwiML.Messaging;
 
 namespace FTech.Presentation.Controllers
 {
@@ -24,7 +20,7 @@ namespace FTech.Presentation.Controllers
             var result = await sms_service.SendOtpAsync(phoneNumber);
             if (result.Success)
             {
-                return Ok("SMS muvaffaqiyatli yuborildi.");
+                return Ok(result);
             }
             else
             {

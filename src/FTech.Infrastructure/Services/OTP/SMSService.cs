@@ -1,17 +1,15 @@
-﻿using FTech.Domain.Models.SMS;
-
-using Microsoft.Extensions.Configuration;
-
-using Newtonsoft.Json;
-
+﻿using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
+using FTech.Domain.Models.SMS;
+using Newtonsoft.Json;
 using System.Text;
+
 namespace FTech.Infrastructure.Services.OTP;
 public class SMSService : ISMSService
 {
     private string TOKEN = string.Empty;
-    private readonly string _email;
-    private readonly string _secretKey;
+    private readonly string? _email;
+    private readonly string? _secretKey;
     private readonly IConfiguration _configuration;
 
     public SMSService(IConfiguration configuration)
@@ -100,5 +98,4 @@ public class SMSService : ISMSService
 
     public void Dispose()
         => GC.SuppressFinalize(this);
-
 }
