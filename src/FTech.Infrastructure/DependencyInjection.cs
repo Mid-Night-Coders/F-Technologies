@@ -14,7 +14,8 @@ namespace FTech.Infrastructure
         {
             //DbContext
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default")));
+                //options.UseSqlServer(configuration.GetConnectionString("Default")));
+                options.UseNpgsql(configuration.GetConnectionString("postgresql")));
 
             //Repositories
             services.AddScoped<IUserRepository, UserRepository>();
