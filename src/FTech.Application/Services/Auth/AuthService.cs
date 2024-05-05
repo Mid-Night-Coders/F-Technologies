@@ -52,6 +52,7 @@ namespace FTech.Application.Services.Auth
 
             var user = new User()
             {
+                Name = registerDTO.Name,
                 PhoneNumber = registerDTO.PhoneNumber,
                 Role = registerDTO.Role,
                 PasswordHash = passwordHash,
