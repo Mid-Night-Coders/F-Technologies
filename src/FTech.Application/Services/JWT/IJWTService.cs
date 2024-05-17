@@ -6,5 +6,6 @@ namespace FTech.Application.Services.JWT
     public interface IJWTService
     {
         TokenDTO GenerateAccessToken(User user);
+        TokenDTO GenerateAccessToken(Driver driver);
     }
 }

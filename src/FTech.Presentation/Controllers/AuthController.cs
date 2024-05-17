@@ -1,4 +1,6 @@
 using FTech.Application.DataTransferObjects.Auth;
+using FTech.Application.DataTransferObjects.Auth.Drivers;
+using FTech.Application.DataTransferObjects.Auth.Users;
 using FTech.Application.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +16,27 @@ namespace FTech.Presentation.Controllers
             => _authService = authService;
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        public async ValueTask<IActionResult> UserLogin(UserLoginDTO loginDTO)
         {
-            return Ok(await _authService.Login(loginDTO));
+            return Ok(await _authService.UserLogin(loginDTO));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterDTO registerDTO)
+        public async ValueTask<IActionResult> UserRegister(UserRegisterDTO registerDTO)
         {
-            return Ok(await _authService.Register(registerDTO));
+            return Ok(await _authService.UserRegister(registerDTO));
+        }
+
+        [HttpPost]
+        public async ValueTask<IActionResult> DriverLogin(DriverLoginDTO loginDTO)
+        {
+            return Ok(await _authService.DriverLogin(loginDTO));
+        }
+
+        [HttpPost]
+        public async ValueTask<IActionResult> DriverRegister(DriverRegisterDTO registerDTO)
+        {
+            return Ok(await _authService.DriverRegister(registerDTO));
         }
     }
 }

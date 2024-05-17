@@ -42,5 +42,32 @@ namespace FTech.Application.Services.JWT
 
             return new TokenDTO { AccessToken = accesstoken };
         }
+
+        public TokenDTO GenerateAccessToken(Driver driver)
+        {
+            var claims = new List<Claim>()
+            {
+                new Claim("Id", driver.Id.ToString()),
+                new Claim("PhoneNumber", driver.PhoneNumber),
+                new Claim("LicenseNumber", driver.LicenseNumber)
+            };
+
+            var authSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_jWTOption.Key));
+
+            var token = new JwtSecurityToken(
+                issuer: _jWTOption.Issuer,
+                audience: _jWTOption.Audience,
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(_jWTOption.ExpiredInMinutes)),
+                claims: claims,
+                signingCredentials: new SigningCredentials(
+                    key: authSigningKey,
+                    algorithm: SecurityAlgorithms.HmacSha256)
+                );
+
+            var accesstoken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new TokenDTO { AccessToken = accesstoken };
+        }
     }
 }

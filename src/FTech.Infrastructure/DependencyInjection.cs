@@ -1,5 +1,7 @@
 ﻿using FTech.Infrastructure.Data;
+using FTech.Infrastructure.Repositories.Drivers;
 using FTech.Infrastructure.Repositories.Users;
+using FTech.Infrastructure.Services.Files;
 using FTech.Infrastructure.Services.OTP;
 
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +21,13 @@ namespace FTech.Infrastructure
 
             //Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDriverRepostory, DriverRepository>();
 
             //SMS
             services.AddScoped<ISMSService, SMSService>();
+
+            //File
+            services.AddScoped<IFileService, FileService>();
 
             return services;
         }
