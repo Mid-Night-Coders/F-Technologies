@@ -1,15 +1,10 @@
-﻿using FTech.Domain.Enums;
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace FTech.Application.DataTransferObjects.Auth.Drivers
 {
     public class DriverRegisterDTO
     {
-        public string FistName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Password { get; set; }
+        public int UserId { get; set; }
         public IFormFile DriverAvatar { get; set; }
 
         // Additional properties for future use

@@ -59,7 +59,8 @@ namespace FTech.Application.Services.Auth
 
             var user = new User()
             {
-                Name = registerDTO.Name,
+                FirstName = registerDTO.FirstName,
+                LastName = registerDTO.LastName,
                 PhoneNumber = registerDTO.PhoneNumber,
                 Role = registerDTO.Role,
                 PasswordHash = passwordHash,
@@ -71,12 +72,13 @@ namespace FTech.Application.Services.Auth
             return _jWTService.GenerateAccessToken(user);
         }
 
-        public async ValueTask<TokenDTO> DriverLogin(DriverLoginDTO loginDTO)
+        public async ValueTask<TokenDTO> DriverLogin(UserLoginDTO loginDTO)
         {
             if (String.IsNullOrWhiteSpace(loginDTO.PhoneNumber) && String.IsNullOrWhiteSpace(loginDTO.Password))
                 throw new ValidationException("Phone number and password cannot be null or white space.");
 
-            var storedDriver = await _driverRepository.GetByPhoneNumberAsync(loginDTO.PhoneNumber);
+            var storedUser = await _userRepository.GetByPhoneNumberAsync(loginDTO.PhoneNumber);
+            var storedDriver = await _driverRepository.FindAsync(d => d.UserId == storedUser.Id);
             if (storedDriver is null)
                 throw new ValidationException("Driver not found");
 
@@ -85,17 +87,9 @@ namespace FTech.Application.Services.Auth
 
         public async ValueTask<TokenDTO> DriverRegister(DriverRegisterDTO registerDTO)
         {
-            if (String.IsNullOrWhiteSpace(registerDTO.PhoneNumber) && String.IsNullOrWhiteSpace(registerDTO.Password))
-                throw new ValidationException("Phone number and password cannot be null or white space.");
-
-
-            var driverLicense = await _driverRepository.GetByLicenseNumberAsync(registerDTO.LicenseNumber);
-            if (driverLicense is not null)
+            var driver = await _driverRepository.GetByLicenseNumberAsync(registerDTO.LicenseNumber);
+            if (driver is not null)
                 throw new ValidationException("This license number already registred.");
-
-            var driverPhone = await _driverRepository.GetByPhoneNumberAsync(registerDTO.PhoneNumber);
-            if (driverPhone is not null)
-                throw new ValidationException("This phone number already registred.");
 
             string avatarPath = await _fileService
                 .UploadAvatarAsync(registerDTO.DriverAvatar);
@@ -104,28 +98,21 @@ namespace FTech.Application.Services.Auth
             string licenseBackImagePath = await _fileService
                 .UploadImageAsync(registerDTO.LicenseBackImage);
 
-            var salt = Guid.NewGuid().ToString();
-            var passwordHash = _passwordHasher.Encrypt(registerDTO.Password, salt);
-
-            var driver = new Driver()
+            var result = new Driver()
             {
-                FistName = registerDTO.FistName,
-                LastName = registerDTO.LastName,
-                PhoneNumber = registerDTO.PhoneNumber,
+                UserId = registerDTO.UserId,
+                City = registerDTO.City,
+                Country = registerDTO.Country,
                 LicenseNumber = registerDTO.LicenseNumber,
                 LicenseIssueDate = registerDTO.LicenseIssueDate,
-                Country = registerDTO.Country,
-                City = registerDTO.City,
-                Salt = salt,
-                PasswordHash = passwordHash,
                 DriverAvatarPath = avatarPath,
                 LicenseBackImagePath = licenseBackImagePath,
-                LicenseFrontImagePath = licenseFrontImagePath
+                LicenseFrontImagePath = licenseFrontImagePath,
             };
 
-            driver = await _driverRepository.AddAsync(driver);
+            driver = await _driverRepository.AddAsync(result);
 
-            return _jWTService.GenerateAccessToken(driver);
+            return _jWTService.GenerateAccessToken(result);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace FTech.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             //DbContext
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>  
                 //options.UseSqlServer(configuration.GetConnectionString("Default")));
                 options.UseNpgsql(configuration.GetConnectionString("postgresql")));
 

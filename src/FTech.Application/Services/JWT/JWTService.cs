@@ -48,7 +48,7 @@ namespace FTech.Application.Services.JWT
             var claims = new List<Claim>()
             {
                 new Claim("Id", driver.Id.ToString()),
-                new Claim("PhoneNumber", driver.PhoneNumber),
+                new Claim("UserId", driver.UserId.ToString()),
                 new Claim("LicenseNumber", driver.LicenseNumber)
             };
 

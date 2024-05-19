@@ -28,7 +28,7 @@ namespace FTech.Presentation.Controllers
         }
 
         [HttpPost]
-        public async ValueTask<IActionResult> DriverLogin(DriverLoginDTO loginDTO)
+        public async ValueTask<IActionResult> DriverLogin(UserLoginDTO loginDTO)
         {
             return Ok(await _authService.DriverLogin(loginDTO));
         }

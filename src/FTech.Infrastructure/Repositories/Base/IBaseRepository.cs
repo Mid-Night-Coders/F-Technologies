@@ -6,7 +6,7 @@ namespace FTech.Infrastructure.Repositories.Base
     {
         ValueTask<TEntity> GetByIdAsync(int id);
         ValueTask<IEnumerable<TEntity>> GetAllAsync();
-        ValueTask<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        ValueTask<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
         ValueTask<TEntity> AddAsync(TEntity entity);
         ValueTask<TEntity> RemoveAsync(TEntity entity);
         ValueTask AddRangeAsync(IEnumerable<TEntity> entities);

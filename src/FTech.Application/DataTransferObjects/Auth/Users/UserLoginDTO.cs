@@ -6,6 +6,5 @@ namespace FTech.Application.DataTransferObjects.Auth.Users
     {
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
-        public Role Role { get; set; }
     }
 }

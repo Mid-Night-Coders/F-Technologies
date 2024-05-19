@@ -25,8 +25,8 @@ namespace FTech.Infrastructure.Repositories.Base
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async ValueTask<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-            => _appDbContext.Set<TEntity>().Where(predicate);
+        public async ValueTask<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
+            => await _appDbContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
 
         public async ValueTask<IEnumerable<TEntity>> GetAllAsync()
             => await _appDbContext.Set<TEntity>().ToListAsync();

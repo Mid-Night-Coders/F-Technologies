@@ -5,7 +5,6 @@ namespace FTech.Infrastructure.Repositories.Drivers
 {
     public interface IDriverRepostory : IBaseRepository<Driver>
     {
-        ValueTask<Driver> GetByPhoneNumberAsync(string phoneNumber);
         ValueTask<Driver> GetByLicenseNumberAsync(string licenseNumber);
     }
 }

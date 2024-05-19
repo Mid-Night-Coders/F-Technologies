@@ -19,13 +19,5 @@ namespace FTech.Infrastructure.Repositories.Drivers
 
             return driver;
         }
-
-        public async ValueTask<Driver> GetByPhoneNumberAsync(string phoneNumber)
-        {
-            var driver = await _appDbContext.Drivers
-                .FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
-
-            return driver;
-        }
     }
 }

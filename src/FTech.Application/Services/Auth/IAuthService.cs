@@ -8,7 +8,7 @@ namespace FTech.Application.Services.Auth
     {
         ValueTask<TokenDTO> UserLogin(UserLoginDTO loginDTO);
         ValueTask<TokenDTO> UserRegister(UserRegisterDTO registerDTO);
-        ValueTask<TokenDTO> DriverLogin(DriverLoginDTO loginDTO);
+        ValueTask<TokenDTO> DriverLogin(UserLoginDTO loginDTO);
         ValueTask<TokenDTO> DriverRegister(DriverRegisterDTO registerDTO);
     }
 }
