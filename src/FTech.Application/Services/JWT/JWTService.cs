@@ -69,5 +69,6 @@ namespace FTech.Application.Services.JWT
 
             return new TokenDTO { AccessToken = accesstoken };
         }
+
     }
 }

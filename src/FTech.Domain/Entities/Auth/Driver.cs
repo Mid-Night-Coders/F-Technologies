@@ -1,10 +1,9 @@
-﻿using FTech.Domain.Enums;
+﻿
 
 namespace FTech.Domain.Entities.Auth
 {
-    public class Driver
+    public class Driver : Auditable
     {
-        public int Id { get; set; }
         public string? Country { get; set; }
         public string? City { get; set; }
         public string? LicenseNumber { get; set; }
