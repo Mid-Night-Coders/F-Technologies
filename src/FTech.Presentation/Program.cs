@@ -1,26 +1,44 @@
 using FTech.Application;
 using FTech.Infrastructure;
+using FTech.Presentation.Extentions;
 using FTech.Presentation.Middlewares;
+using Newtonsoft.Json;
 
-var builder = WebApplication.CreateBuilder(args);
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddInfrastructureServices(builder.Configuration);
+        builder.Services.AddApplicationServices(builder.Configuration);
+        builder.Services.AddInfrastructureServices(builder.Configuration);
 
-var app = builder.Build();
+        builder.Services.AddCustomExtention();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+        /// Fix the Cycle
+        builder.Services.AddControllers()
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+             });
 
-app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+        var app = builder.Build();
 
-app.MapControllers();
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
-app.Run();
+        app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+    }
+}

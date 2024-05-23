@@ -12,7 +12,7 @@ namespace FTech.Domain.Entities.Auth
         public string? LicenseBackImagePath { get; set; }
         public string? DriverAvatarPath { get; set; }
 
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public User? User { get; set; }
     }
 }

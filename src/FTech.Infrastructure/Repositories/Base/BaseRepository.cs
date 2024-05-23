@@ -7,9 +7,12 @@ namespace FTech.Infrastructure.Repositories.Base
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly AppDbContext _appDbContext;
-
+        private readonly DbSet<TEntity> _dbSet;
         public BaseRepository(AppDbContext appDbContext)
-            => _appDbContext = appDbContext;
+        {
+            _appDbContext = appDbContext;
+            _dbSet = _appDbContext.Set<TEntity>();
+        }
 
         public async ValueTask<TEntity> AddAsync(TEntity entity)
         {
@@ -28,10 +31,10 @@ namespace FTech.Infrastructure.Repositories.Base
         public async ValueTask<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
             => await _appDbContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
 
-        public async ValueTask<IEnumerable<TEntity>> GetAllAsync()
-            => await _appDbContext.Set<TEntity>().ToListAsync();
+        public IQueryable<TEntity> GetAllAsync()
+            => _dbSet;
 
-        public async ValueTask<TEntity> GetByIdAsync(int id)
+        public async ValueTask<TEntity> GetByIdAsync(long id)
             => await _appDbContext.Set<TEntity>().FindAsync(id);
 
         public async ValueTask<TEntity> RemoveAsync(TEntity entity)
@@ -47,5 +50,12 @@ namespace FTech.Infrastructure.Repositories.Base
             _appDbContext.Set<TEntity>().RemoveRange(entities);
             await _appDbContext.SaveChangesAsync();
         }
+        public async ValueTask<TEntity> UpdateAsync(TEntity entity)
+        {
+            var result = (_appDbContext.Update(entity)).Entity;
+            await _appDbContext.SaveChangesAsync();
+            return result;
+        }
+
     }
 }
