@@ -1,9 +1,11 @@
 ﻿using FTech.Infrastructure.Data;
+using FTech.Infrastructure.Repositories.Chats;
+using FTech.Infrastructure.Repositories.ChatUsers;
 using FTech.Infrastructure.Repositories.Drivers;
+using FTech.Infrastructure.Repositories.Messages;
 using FTech.Infrastructure.Repositories.Users;
 using FTech.Infrastructure.Services.Files;
 using FTech.Infrastructure.Services.OTP;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,11 @@ namespace FTech.Infrastructure
 
             //File
             services.AddScoped<IFileService, FileService>();
+
+            //Chat
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IChatUserRepository, ChatUserRepository>();
 
             return services;
         }

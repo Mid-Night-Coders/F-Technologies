@@ -1,4 +1,5 @@
 ﻿using FTech.Domain.Entities.Auth;
+using FTech.Domain.Entities.Drivers;
 using FTech.Infrastructure.Data;
 using FTech.Infrastructure.Repositories.Base;
 

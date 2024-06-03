@@ -4,6 +4,7 @@ using FTech.Application.DataTransferObjects.Auth.Users;
 using FTech.Application.Services.Helpers;
 using FTech.Application.Services.JWT;
 using FTech.Domain.Entities.Auth;
+using FTech.Domain.Entities.Drivers;
 using FTech.Domain.Exceptions;
 using FTech.Infrastructure.Repositories.Drivers;
 using FTech.Infrastructure.Repositories.Users;
@@ -41,6 +42,8 @@ namespace FTech.Application.Services.Auth
             var storedUser = await _userRepository.GetByPhoneNumberAsync(loginDTO.PhoneNumber);
             if (storedUser is null) 
                 throw new ValidationException("User not found");
+            if (!_passwordHasher.Verify(storedUser.PasswordHash, loginDTO.Password, storedUser.Salt))
+                throw new ValidationException("Password not valid");
 
             return _jWTService.GenerateAccessToken(storedUser);
         }
@@ -81,6 +84,8 @@ namespace FTech.Application.Services.Auth
             var storedDriver = await _driverRepository.FindAsync(d => d.UserId == storedUser.Id);
             if (storedDriver is null)
                 throw new ValidationException("Driver not found");
+            if(!_passwordHasher.Verify(storedUser.PasswordHash, loginDTO.Password, storedUser.Salt))
+                throw new ValidationException("Password not valid");
 
             return _jWTService.GenerateAccessToken(storedDriver);
         }

@@ -1,8 +1,20 @@
 using FTech.Application;
 using FTech.Infrastructure;
+using FTech.Presentation.Hubs;
 using FTech.Presentation.Middlewares;
 
+using Microsoft.AspNetCore.ResponseCompression;
+
 var builder = WebApplication.CreateBuilder(args);
+
+#region SignalR Services
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+          new[] { "application/octet-stream" });
+});
+builder.Services.AddSignalR();
+#endregion
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -22,5 +34,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();
