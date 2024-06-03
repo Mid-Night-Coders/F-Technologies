@@ -1,6 +1,8 @@
 ﻿using FTech.Application.DataTransferObjects;
 using FTech.Application.DataTransferObjects.Auth;
 using FTech.Domain.Entities.Auth;
+using FTech.Domain.Entities.Drivers;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
